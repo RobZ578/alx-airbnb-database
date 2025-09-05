@@ -37,3 +37,43 @@ ON Property(price);
 -- Optional composite index for queries filtering by city and ordering by price
 -- CREATE INDEX idx_property_city_price
 -- ON Property(city, price);
+-- ========================================
+-- Measure query performance BEFORE indexes
+-- ========================================
+
+-- Booking by user_id
+EXPLAIN ANALYZE
+SELECT * FROM Booking WHERE user_id = 123;
+
+-- Property by city
+EXPLAIN ANALYZE
+SELECT * FROM Property WHERE city = 'Addis Ababa';
+
+-- User by email
+EXPLAIN ANALYZE
+SELECT * FROM User WHERE email = 'user@example.com';
+
+-- Property ordered by price in a city
+EXPLAIN ANALYZE
+SELECT * FROM Property WHERE city = 'Addis Ababa' ORDER BY price;
+
+-- ========================================
+-- Apply indexes from database_index.sql
+-- ========================================
+-- \i database_index.sql  -- Run this manually in your SQL client
+
+-- ========================================
+-- Measure query performance AFTER indexes
+-- ========================================
+
+EXPLAIN ANALYZE
+SELECT * FROM Booking WHERE user_id = 123;
+
+EXPLAIN ANALYZE
+SELECT * FROM Property WHERE city = 'Addis Ababa';
+
+EXPLAIN ANALYZE
+SELECT * FROM User WHERE email = 'user@example.com';
+
+EXPLAIN ANALYZE
+SELECT * FROM Property WHERE city = 'Addis Ababa' ORDER BY price;
